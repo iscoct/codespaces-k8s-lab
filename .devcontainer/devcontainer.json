@@ -5,10 +5,8 @@
         "cpus": 2
     },
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-        "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-            "minikube": "none"
-        }
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
-    "postCreateCommand": "curl -fsSLo /tmp/kind https://kind.sigs.k8s.io/dl/v0.32.0/kind-linux-amd64 && sudo install -m 0755 /tmp/kind /usr/local/bin/kind && rm /tmp/kind"
+    "//": "kubectl/helm/kind are installed by setup.sh using official binaries + sha256 checks. We deliberately do NOT use the kubectl-helm-minikube devcontainer feature: its Helm step verifies the download against a public GPG keyserver (hkp://keyserver.pgp.com) that is frequently unreachable, which fails the whole container build and drops you into a recovery container with no toolbox.",
+    "postCreateCommand": "bash .devcontainer/setup.sh"
 }
