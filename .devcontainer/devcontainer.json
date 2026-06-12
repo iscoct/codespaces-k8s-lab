@@ -8,6 +8,13 @@
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
         "ghcr.io/devcontainers/features/sshd:1": {}
     },
-    "//": "docker-in-docker gives a Docker daemon inside the codespace so kind can run. sshd lets `gh codespace ssh` reach the container from the CLI (the browser VS Code terminal works without it, but the CLI flow needs it). kubectl/helm/kind are installed by setup.sh using official binaries + sha256 checks: we deliberately do NOT use the kubectl-helm-minikube devcontainer feature, whose Helm step verifies the download against a public GPG keyserver (hkp://keyserver.pgp.com) that is frequently unreachable and fails the whole container build.",
+    "//": "docker-in-docker gives a Docker daemon inside the codespace so kind can run. sshd lets `gh codespace ssh` reach the container from the CLI (the browser VS Code terminal works without it). kubectl/helm/kind are installed by setup.sh from official binaries + sha256 checks (NOT the kubectl-helm-minikube feature, whose Helm GPG keyserver verification fails the build).",
+    "forwardPorts": [8080],
+    "portsAttributes": {
+        "8080": {
+            "label": "web-app",
+            "onAutoForward": "silent"
+        }
+    },
     "postCreateCommand": "bash .devcontainer/setup.sh"
 }
